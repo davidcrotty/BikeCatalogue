@@ -14,6 +14,7 @@ import net.davidcrotty.bikecatalogue.cucumber.page.MainPage;
 import net.davidcrotty.bikecatalogue.util.ActivityFinisher;
 
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import cucumber.api.java.After;
@@ -48,17 +49,21 @@ public class AppStartTest {
     private ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class,
             false, false);
 
+    @Test
     @Given("^A bike image$")
     public void aBikeImage() {
+        //Activity must launch within the given, when and then cycle
         mActivity = mActivityRule.launchActivity(new Intent());
         mainPage = new MainPage();
     }
 
+    @Test
     @When("^The app launches$")
     public void theAppLaunches() {
 
     }
 
+    @Test
     @Then("^A bike image should be rendered$")
     public void aBikeImageShouldBeRendered() {
         mainPage.hasImage();

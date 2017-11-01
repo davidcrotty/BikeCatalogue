@@ -14,6 +14,7 @@ import net.davidcrotty.bikecatalogue.cucumber.page.SecondPage;
 import net.davidcrotty.bikecatalogue.util.ActivityFinisher;
 
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import cucumber.api.java.After;
@@ -44,17 +45,20 @@ public class LoadCatalogueTest {
     private ActivityTestRule<SecondActivity> mActivityRule = new ActivityTestRule<>(SecondActivity.class,
             false, false);
 
+    @Test
     @Given("^A load button on screen$")
     public void loadButtonOnScreen() {
         mActivity = mActivityRule.launchActivity(new Intent());
         page = new SecondPage();
     }
 
+    @Test
     @When("^User taps load button$")
     public void userTapsLoadButton() throws Throwable {
         page.pressButton();
     }
 
+    @Test
     @Then("^Bike data should be displayed$")
     public void bikeDataShouldBeDisplayed() throws Throwable {
         page.hasLoaded();
