@@ -10,6 +10,7 @@ import android.support.test.runner.AndroidJUnit4;
 import net.davidcrotty.bikecatalogue.MainActivity;
 import net.davidcrotty.bikecatalogue.SecondActivity;
 import net.davidcrotty.bikecatalogue.cucumber.page.MainPage;
+import net.davidcrotty.bikecatalogue.cucumber.page.SecondPage;
 import net.davidcrotty.bikecatalogue.util.ActivityFinisher;
 
 import org.junit.Rule;
@@ -37,26 +38,26 @@ public class LoadCatalogueTest {
     @SuppressWarnings("unused")
     private Context mAppContext;
     private Activity mActivity;
-    private MainPage page;
+    private SecondPage page;
 
     @Rule
-    private ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class,
+    private ActivityTestRule<SecondActivity> mActivityRule = new ActivityTestRule<>(SecondActivity.class,
             false, false);
 
     @Given("^A load button on screen$")
     public void loadButtonOnScreen() {
         mActivity = mActivityRule.launchActivity(new Intent());
-        page = new MainPage();
+        page = new SecondPage();
     }
 
     @When("^User taps load button$")
     public void userTapsLoadButton() throws Throwable {
-
+        page.pressButton();
     }
 
     @Then("^Bike data should be displayed$")
     public void bikeDataShouldBeDisplayed() throws Throwable {
-        page.hasImage();
+        page.hasLoaded();
         ActivityFinisher.finishOpenActivities();
     }
 }
