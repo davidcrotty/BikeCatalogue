@@ -3,6 +3,7 @@ package net.davidcrotty.bikecatalogue.cucumber.steps;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Debug;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -37,6 +38,20 @@ public class AppStartTest {
     @Rule
     private ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class,
             false, false);
+
+    /**
+     * Wait for the debugger to be manually attached to this running process.
+     * Use this to debug test execution by adding this step to your test scenario and
+     * when the test is running in Android Studio choose menu "Run - Attach debugger to Android process",
+     * finally select the name of your app package from the list of processes displayed.
+     */
+    @Test
+    @Given("^I wait for manual attachment of the debugger$")
+    public void wait_for_manual_attachment_of_debugger() throws InterruptedException {
+        while (!Debug.isDebuggerConnected()) {
+            Thread.sleep(1000);
+        }
+    }
 
     @Test
     @Given("^A bike image$")
