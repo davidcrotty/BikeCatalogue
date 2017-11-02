@@ -13,11 +13,55 @@ buildscript {
 }
 
 allprojects {
+    apply plugin: 'jacoco'
+    jacoco {
+        toolVersion = "0.7.5.201505241946"
+    }
     repositories {
         jcenter()
+        maven { url "https://maven.google.com" }
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+def coverageSourceDirs = ['app/src/main/java']
+
+def coverageExcludes = ['**/R.class',
+                        '**/R$*.class',
+                        '**/*$$ViewBinder*.*',
+                        '**/inject/*',
+                        '**/*$InjectAdapter.*',
+                        '**/BuildConfig.*',
+                        '**/Manifest*.*',
+                        '**/*_Provide*Factory.*',
+                        '**/*_Member*Injector.*',
+                        '**/*_Factory.*']
+
+def coverageClassDirectories = [fileTree(dir: 'app/build/intermediates/classes/debug', excludes: coverageExcludes)]
+
+task jacocoRootReport(type: JacocoReport) {
+    dependsOn "app:jacocoTestReport"
+
+    additionalSourceDirs = files(coverageSourceDirs)
+    sourceDirectories = files(coverageSourceDirs)
+    classDirectories = files(coverageClassDirectories)
+    executionData = files(tasks.getByPath("app:jacocoTestReport").executionData)
+
+    reports {
+        html.enabled = true
+        xml.enabled = false
+        csv.enabled = false
+    }
+    onlyIf = {
+        true
+    }
+
+    doFirst {
+        executionData = files(executionData.findAll {
+            it.exists()
+        })
+    }
 }

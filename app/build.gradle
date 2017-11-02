@@ -12,6 +12,11 @@ android {
         testInstrumentationRunner "net.davidcrotty.bikecatalogue.cucumber.runner.CucumberRunner"
     }
     buildTypes {
+        debug {
+            minifyEnabled = false
+            testCoverageEnabled = true
+            minifyEnabled false
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -33,4 +38,37 @@ dependencies {
         exclude module: 'cucumber-jvm-deps'
     }
     androidTestCompile 'info.cukes:cucumber-jvm-deps:1.0.3'
+}
+
+def coverageSourceDirs = ['src/main/java']
+
+task jacocoTestReport(type: JacocoReport, dependsOn: 'connectedAndroidTest') {
+
+    group = "Reporting"
+
+    description = "Generate Jacoco coverage reports"
+
+    classDirectories = fileTree(dir: 'build/intermediates/classes/debug',
+            excludes: ['**/R.class',
+                       '**/R$*.class',
+                       '**/*$$ViewBinder*.*',
+                       '**/inject/*',
+                       '**/*$InjectAdapter.*',
+                       '**/BuildConfig.*',
+                       '**/Manifest*.*',
+                       '**/*_Provide*Factory.*',
+                       '**/*_Member*Injector.*',
+                       '**/*_Factory.*',
+                       '**/PagerTitleStripV22*.*'])
+
+    additionalSourceDirs = files(coverageSourceDirs)
+    sourceDirectories = files(coverageSourceDirs)
+    executionData = fileTree(dir: "$buildDir", includes: [
+            "outputs/code-coverage/connected/*coverage.ec"
+    ])
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
 }
