@@ -16,7 +16,7 @@ class DownloadActivity : AppCompatActivity() {
         getApp().download.inject(this)
 
         download_button.setOnClickListener {
-            download.doDownload()
+            status_text.text = download.doDownload()
         }
     }
 }

@@ -7,6 +7,6 @@ package net.davidcrotty.bikecatalogue.network
  */
 class Provider {
     fun fetchImage() : String {
-        return ""
+        return "success"
     }
 }

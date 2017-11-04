@@ -19,6 +19,7 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
  * Created by David Crotty on 04/11/2017.
@@ -49,6 +50,7 @@ public class NetworkActivityTest {
     @Test
     @Then("^After a network delay, provide an image$")
     public void provideAnImage() {
+        onView(withId(R.id.status_text)).check(matches(withText("success")));
         ActivityFinisher.finishOpenActivities();
     }
 }
