@@ -7,7 +7,7 @@ import net.davidcrotty.bikecatalogue.network.Provider
  *
  * Copyright © 2017 David Crotty - All Rights Reserved
  */
-class Download(private val provider: Provider) : Downloadable {
+open class Download(private val provider: Provider) : Downloadable {
 
     override fun doDownload(): String {
         return provider.fetchImage()

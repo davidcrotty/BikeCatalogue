@@ -51,7 +51,7 @@ class NetworkActivityTest {
     @Test
     @Then("^After a network delay, provide an image$")
     fun provideAnImage() {
-        onView(withId(R.id.status_text)).check(matches(withText("success")))
+        onView(withId(R.id.status_text)).check(matches(withText("mocked")))
         ActivityFinisher.finishOpenActivities()
     }
 }

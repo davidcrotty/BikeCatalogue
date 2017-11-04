@@ -12,6 +12,6 @@ import javax.inject.Singleton
  * Copyright © 2017 David Crotty - All Rights Reserved
  */
 @Module
-class DownloadModule(val provider: Provider) {
-    @Provides @Singleton fun provideDownload() = Download(provider)
+open class DownloadModule(val provider: Provider) {
+    @Provides @Singleton open fun provideDownload() = Download(provider)
 }

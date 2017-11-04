@@ -10,9 +10,9 @@ import net.davidcrotty.bikecatalogue.network.Provider
  *
  * Copyright © 2017 David Crotty - All Rights Reserved
  */
-class App : Application() {
+open class App : Application() {
 
-    val download by lazy { DaggerDownloadComponent.builder()
+    open val download by lazy { DaggerDownloadComponent.builder()
             .downloadModule(DownloadModule(Provider()))
             .build() }
 
