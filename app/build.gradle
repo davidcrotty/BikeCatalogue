@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 26
@@ -10,6 +11,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "net.davidcrotty.bikecatalogue.cucumber.runner.CucumberRunner"
+    }
+    testOptions {
+        animationsDisabled = true
     }
     buildTypes {
         debug {
@@ -38,6 +42,7 @@ dependencies {
         exclude module: 'cucumber-jvm-deps'
     }
     androidTestCompile 'info.cukes:cucumber-jvm-deps:1.0.3'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
 
 def coverageSourceDirs = ['src/main/java']
@@ -72,3 +77,7 @@ task jacocoTestReport(type: JacocoReport, dependsOn: 'connectedAndroidTest') {
         html.enabled = true
     }
 }
+repositories {
+    mavenCentral()
+}
+apply plugin: 'kotlin-android-extensions'

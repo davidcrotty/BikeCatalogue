@@ -13,6 +13,7 @@ import net.davidcrotty.bikecatalogue.util.ActivityFinisher;
 
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
 import cucumber.api.java.en.Given;
@@ -39,23 +40,13 @@ public class AppStartTest {
     private ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class,
             false, false);
 
-    /**
-     * Wait for the debugger to be manually attached to this running process.
-     * Use this to debug test execution by adding this step to your test scenario and
-     * when the test is running in Android Studio choose menu "Run - Attach debugger to Android process",
-     * finally select the name of your app package from the list of processes displayed.
-     */
-    @Test
-    @Given("^I wait for manual attachment of the debugger$")
-    public void wait_for_manual_attachment_of_debugger() throws InterruptedException {
-        while (!Debug.isDebuggerConnected()) {
-            Thread.sleep(1000);
-        }
-    }
+    @Rule
+    public ExpectedException expectedEx = ExpectedException.none();
 
     @Test
     @Given("^A bike image$")
-    public void aBikeImage() {
+    public void aBikeImage() throws Exception {
+        expectedEx.expect(Exception.class);
         //Activity must launch within the given, when and then cycle
         mActivity = mActivityRule.launchActivity(new Intent());
         mainPage = new MainPage();
